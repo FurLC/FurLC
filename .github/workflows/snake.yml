@@ -2,11 +2,16 @@ name: Generate Contribution Snake
 
 on:
   schedule:
-    - cron: "0 0 * * *"    # 每天运行一次
-  workflow_dispatch:        # 支持手动触发
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   generate-snake:
+    permissions: 
+      contents: write
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +23,7 @@ jobs:
             dist/github-contribution-grid-snake-white.svg?palette=github-light
 
       - name: Push to output branch
-        uses: crazy-max/ghaction-github-pages@v4
+        uses: crazy-max/ghaction-github-pages@v5
         with:
           target_branch: output
           build_dir: dist
